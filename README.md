@@ -28,11 +28,44 @@ Data Preprocessing
 ------------------
 How do we represent and characterize music?
 
+<a href=https://www.analyticsvidhya.com/blog/2022/03/music-genre-classification-project-using-machine-learning-techniques/>
 Feature Extraction
+</a>
 Audio features can be classified into 3 categories: high-level, mid-level, and low-level
 - High-level = features related to music lyrics (chords, rhythm, melody)
 - Mid-level = features related to beat level attributes, pitch-like fluctuation patterns, and MFCCS
+- Low-level = features including amplitude envelope, energy, zero-crossing rate, etc.
 
+<a ref=https://towardsdatascience.com/learning-from-audio-spectrograms-37df29dba98c>
+Audio Representation
+</a>
+- Spectrogram = photographic or other visual or electronic representation of a spectrum
+    - Represents time, frequency, and amplitude in one graph
+        - Frequency vs time, amplitude is brightness/colour
+    - How to create?
+        1. Split the audio into overlapping chunks or windows
+        2. Perform the short time fourier transformation on each window (absolute value)
+        3. Each resulting window has a vertical line presenting the magnitude vs. frequency
+        4. Take the resulting window and convert to decibels
+        5. Lay these windows back into the length of the original song and display the output
+
+https://towardsdatascience.com/learning-from-audio-the-mel-scale-mel-spectrograms-and-mel-frequency-cepstral-coefficients-f5752b6324a8
+Mel Scale
+- Mel scale = logarithmic transformation of a signal's frequency
+    - Sounds of equal distance on the Mel scale are perceived to be of equal distance to humans
+    $ m = 1127 \bullet ln(1 + \frac({f}{700}))$
+
+Mel Spectrograms
+- Spectrograms that visualize sounds on the Mel scale as opposed to the frequency domain
+
+Mel Frequency Cepstral Coefficients
+    1. Convert from Hertz to Mel scale
+    2. Take logarithm of Mel representation of audio
+    3. Take logarithmic magnitude and use Discrete Cosine Transformation
+    4. This result creates a spectrum over Mel frequencies as opposed to time, thus creating MFCCs
+- In ML, the number of MFCCs used is a hyperparameter
+https://medium.com/@tanveer9812/mfccs-made-easy-7ef383006040
+- MFCCs are a compact representation of the spectrum of an audio signal
 
 Methodology
 -----------
@@ -42,3 +75,5 @@ The top 4 approaches to music genre classification are:
     3. K-Means Clustering
     4. CNNs
 I guess? I'll slowly move along this list.
+
+<h2> SVM </h2>
