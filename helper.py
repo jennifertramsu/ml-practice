@@ -1,7 +1,7 @@
 import librosa
 
 def preprocess(file):
-    ''' 
+    ''' This function takes in the path to an audio file and returns the floating-point time series.
     Parameters
     ----------
     file : str
@@ -9,11 +9,11 @@ def preprocess(file):
 
     Returns
     -------
-    audio :
+    audio : NumPy Array
+        Floating-point time series.
 
     err : int {0, 1}
         Error code. 
-
     '''
     err = 0
 
@@ -31,11 +31,19 @@ def process_train(X_train, y_train):
 
     Parameters
     ----------
+    X_train : list
+        List of path names to the training audio files.
 
+    y_train : list
+        List of labels corresponding to X_train.
 
     Returns
     -------
-    
+    X_audio : list
+        Cleaned X_train list of loaded audio files.
+
+    y_train : list
+        Cleaned list of labels.
     '''
     X_audio = []
 
