@@ -90,3 +90,12 @@ The top 4 approaches to music genre classification are:
 I guess? I'll slowly move along this list.
 
 <h2> SVM </h2>
+
+<h3>First Trial</h3>
+Still just exploring how to extract features from audio files. For now, the following time-domain features are used:
+
+    1. Mean zero-crossing rate
+    2. Mean amplitude envelope
+    3. Mean RMS
+    
+Accuracy: 29% LOL
