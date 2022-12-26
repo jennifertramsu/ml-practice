@@ -20,7 +20,7 @@ def preprocess(file):
     err = 0
 
     try:
-        audio = librosa.load(file)
+        audio = librosa.load(file)[0]
     except:
         print(file + " is corrupted!")
         err = 1
@@ -29,7 +29,7 @@ def preprocess(file):
         return audio, err
 
 def process_train(X_train, y_train):
-    ''' This function will process the training files.
+    ''' This function will process a list of audio files.
 
     Parameters
     ----------
@@ -44,43 +44,51 @@ def process_train(X_train, y_train):
     X_audio : NumPy Array
         Cleaned X_train list of loaded audio files.
 
-    y_clean : list
+    y_audio : list
         Cleaned list of labels.
     '''
     X_audio = []
-    errs = []
-    
+    y_audio = []
+
     for i in range(len(X_train)):
         path = X_train[i]
+        label = y_train[i]
+
         audio, err = preprocess(path)
 
-        if err:
-            errs.append(i)
-        else:
-            X_audio.append(audio[0])
+        if not err:
+            X_audio.append(audio)
+            y_audio.append(label)
 
     X_audio = np.array(X_audio, dtype='object')
-    y_clean = []
 
-    for j in range(len(y_train)):
-        if j in errs:
-            continue
-        else:
-            y_clean.append(y_train[j])
-
-    return X_audio, y_clean
+    return X_audio, y_audio
 
 def amplitude_envelope(signal, frame_size, hop_length):
-    '''
+    ''' This function returns the amplitude envelope of a signal.
+    Parameters
+    ----------
+    signal : NumPy Array
+
+    frame_size : int
+
+    hop_length : int
+
+    Returns
+    -------
     '''
 
     return np.array([max(signal[i:i+frame_size]) for i in range(0, signal.size, hop_length)])
 
-def extract(audio):
-    '''
+def extract(audio, FRAME_SIZE = 1024, HOP_LENGTH = 512):
+    ''' This function returns a dictionary of the features for an audio file.
     Parameters
     ----------
     audio : NumPy Array
+
+    FRAME_SIZE : int (default 1024)
+
+    HOP_LENGTH : int (default 512)
 
     Returns
     -------
@@ -88,9 +96,6 @@ def extract(audio):
 
     '''
     # Time-Domain Features
-
-    FRAME_SIZE = 1024
-    HOP_LENGTH = 512
 
     features = {
         'Zero Crossing Rate': np.average(librosa.feature.zero_crossing_rate(audio, frame_length=FRAME_SIZE, hop_length=HOP_LENGTH)[0]),
@@ -101,14 +106,14 @@ def extract(audio):
     return features
 
 def feature_extract(X_audio_train):
-    '''
+    ''' This function extracts the features for a list of audio files.
     Parameters
     ----------
-    X_audio_train : 
+    X_audio_train : list
 
     Returns
     -------
-    X_features_train : 
+    X_features_train : Pandas DataFrame
     '''
 
     rows = []

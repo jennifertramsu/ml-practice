@@ -98,4 +98,4 @@ Still just exploring how to extract features from audio files. For now, the foll
     2. Mean amplitude envelope
     3. Mean RMS
     
-Accuracy: 29% LOL
+Accuracy: 31% LOL
