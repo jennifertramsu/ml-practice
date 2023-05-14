@@ -95,12 +95,12 @@ def extract(audio, FRAME_SIZE = 1024, HOP_LENGTH = 512):
     features : dict
 
     '''
-    # Time-Domain Features
 
     features = {
         'Zero Crossing Rate': np.average(librosa.feature.zero_crossing_rate(audio, frame_length=FRAME_SIZE, hop_length=HOP_LENGTH)[0]),
         'Amplitude Envelope': np.average(amplitude_envelope(audio, frame_size=FRAME_SIZE, hop_length=HOP_LENGTH)),
-        'RMS': np.average(librosa.feature.rms(audio, frame_length=FRAME_SIZE, hop_length=HOP_LENGTH)[0])
+        'RMS': np.average(librosa.feature.rms(audio, frame_length=FRAME_SIZE, hop_length=HOP_LENGTH)[0]),
+        'Spectral Centroid': np.average(librosa.feature.spectral_centroid(audio))
     }
 
     return features
